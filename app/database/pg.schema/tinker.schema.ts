@@ -17,8 +17,8 @@ export const userProfileTable = pgTable("user_profile", {
 
 export const matchesTable = pgTable("matches", {
     id: uuid("id").primaryKey().defaultRandom().notNull(),
-    likeBy: text("like_by").references(() => userProfileTable.id, { onDelete: 'cascade' }).notNull(),
-    likeUser: text("like_user").references(() => userProfileTable.id, { onDelete: 'cascade' }).notNull(),
+    likeBy: uuid("like_by").references(() => userProfileTable.id, { onDelete: 'cascade' }).notNull(),
+    likeUser: uuid("like_user").references(() => userProfileTable.id, { onDelete: 'cascade' }).notNull(),
     mailSent: boolean("mail_sent").default(false).notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
 });

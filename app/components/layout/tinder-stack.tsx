@@ -33,7 +33,7 @@ export function TinderStack({
   };
 
   return (
-    <div className="flex h-dvh w-full items-center justify-center">
+    <div className="flex h-[90vh] w-full items-center justify-center">
       <AnimatePresence>
         {currentUser && (
           <motion.div
@@ -49,12 +49,12 @@ export function TinderStack({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ opacity: 0, x: 0 }}
           >
-            <Card className="overflow-hidden shadow-lg">
+            <Card className="overflow-hidden shadow-lg p-0">
               {currentUser.image && (
                 <img
                   src={currentUser.image}
                   alt={currentUser.name}
-                  className="w-full max-h-[63vh] aspect-9/16 object-cover"
+                  className="w-full max-h-[60vh] aspect-9/16 object-cover"
                 />
               )}
               <CardContent className="space-y-2 p-4">

@@ -35,6 +35,8 @@ import { postgresDB } from "~/database";
 import { usersTable } from "~/database/pg.schema";
 import { eq } from "drizzle-orm";
 import { userProfileTable } from "~/database/pg.schema/tinker.schema";
+import { v2 as cloudinary } from "cloudinary";
+import { catchError } from "~/utilities/handlers/error.handlers";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const session = await authorizeRequest(request, "GET");
@@ -57,6 +59,28 @@ export async function loader({ request }: LoaderFunctionArgs) {
     data: {
       profile: profile[0],
     },
+  });
+}
+
+async function uploader(image: File): Promise<string> {
+  const buffer = Buffer.from(await image.arrayBuffer());
+
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream(
+        {
+          folder: "user_profiles",
+          resource_type: "image",
+        },
+        (error, result) => {
+          if (error || !result) {
+            reject(new Error("Cloudinary upload failed"));
+            return;
+          }
+          resolve(result.secure_url);
+        }
+      )
+      .end(buffer);
   });
 }
 
@@ -104,7 +128,20 @@ export async function action({ request }: ActionFunctionArgs) {
 
   appLogger.info(submission, "Onboarding submission");
 
-  const imageUrl = "";
+  const [, imageUrl] = await catchError(uploader(submission.data.image))
+    .then((url) => url)
+    .catch((error) => {
+      appLogger.error(error, "Cloudinary upload error");
+      throw data<ApiResponse>(
+        {
+          success: false,
+          error: {
+            message: "Failed to upload image. Please try again.",
+          },
+        },
+        { status: 500 }
+      );
+    });
 
   await postgresDB
     .update(usersTable)

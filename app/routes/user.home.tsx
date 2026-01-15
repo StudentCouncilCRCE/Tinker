@@ -51,9 +51,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export async function action({ request }: ActionFunctionArgs) {
   const session = await authorizeRequest(request, "POST");
 
-  const formData = await request.formData();
-  const swipedUserId = formData.get("swipedUserId") as string;
-  const direction = formData.get("direction") as "left" | "right";
+  const formJson = await request.json();
+  const swipedUserId = formJson.swipedUserId as string;
+  const direction = formJson.direction as "left" | "right";
   if (direction === "left") {
     return data<ApiResponse>({
       success: true,
@@ -149,10 +149,16 @@ export default function Page() {
 
   const handleSwipe = (direction: "left" | "right", user: PublicProfile) => {
     if (direction === "right") {
-      axiosClient.post("/user/home", {
-        swipedUserId: user.id,
-        direction,
-      });
+      axiosClient.post(
+        "/user/home",
+        {
+          swipedUserId: user.id,
+          direction,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
   };
 

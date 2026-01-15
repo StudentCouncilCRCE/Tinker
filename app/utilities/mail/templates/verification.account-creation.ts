@@ -59,7 +59,7 @@ function HTML(url: string) {
 }
 
 export const accountVerificationEMailTemplate = {
-    subject: "Reset your password - Tinker",
+    subject: "Verify your email - Tinker",
     text: Text,
     html: HTML,
 }
