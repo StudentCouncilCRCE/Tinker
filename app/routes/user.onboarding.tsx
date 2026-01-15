@@ -34,7 +34,7 @@ import { authorizeRequest } from "~/utilities/router.utilty";
 import { postgresDB } from "~/database";
 import { usersTable } from "~/database/pg.schema";
 import { eq } from "drizzle-orm";
-import { userProfileTable } from "~/database/pg.schema/user.schema";
+import { userProfileTable } from "~/database/pg.schema/tinker.schema";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const session = await authorizeRequest(request, "GET");

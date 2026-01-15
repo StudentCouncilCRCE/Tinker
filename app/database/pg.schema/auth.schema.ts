@@ -7,6 +7,7 @@ import {
   integer,
   index,
 } from "drizzle-orm/pg-core";
+import { userProfileTable } from "./tinker.schema";
 
 export const usersTable = pgTable("user", {
   id: text("id").primaryKey(),
@@ -82,9 +83,10 @@ export const verificationsTable = pgTable(
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
-export const userRelations = relations(usersTable, ({ many }) => ({
+export const userRelations = relations(usersTable, ({ one, many }) => ({
   sessions: many(sessionsTable),
   accounts: many(accountsTable),
+  profile: one(userProfileTable),
 }));
 
 export const sessionRelations = relations(sessionsTable, ({ one }) => ({
