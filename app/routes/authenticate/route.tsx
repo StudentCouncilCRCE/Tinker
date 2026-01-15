@@ -46,16 +46,18 @@ export async function action({ request }: ActionFunctionArgs) {
     const formData = await request.formData();
 
     const authSchema = z.object({
-      email: z.email(),
-      password: z.string().min(8),
-      confirmPassword: z.string().default(""),
+      email: z.email("Enter a valid email address"),
+      password: z
+        .string()
+        .min(8, "Password must be at least 8 characters long"),
+      confirmPassword: z.string().default("Error in confirm password"),
       intent: z.enum(["signin", "signup"]),
     });
     const submission = authSchema.safeParse(Object.fromEntries(formData));
 
     if (!submission.success) {
       return data(
-        { success: false, error: { message: "Invalid input" } },
+        { success: false, error: { message: submission.error.message } },
         { status: 400 }
       );
     }
@@ -118,7 +120,7 @@ export default function AuthenticationPage() {
     const data = fetcher.data as ApiResponse;
     if (data.success) {
       toast.success(data.message);
-      navigate(data.data.url);
+      isSignIn && navigate(data.data.url);
     } else if (!data.success)
       Array.isArray(data.error.message)
         ? data.error.message.forEach((msg) => toast.error(msg))

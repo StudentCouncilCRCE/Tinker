@@ -19,40 +19,5 @@ export async function validatePassword(
         throw new PasswordValidationError(password, "Password must not exceed 128 characters");
     }
 
-    // Check for at least one lowercase letter
-    if (!/[a-z]/.test(password)) {
-        throw new PasswordValidationError(password, "Password must contain at least one lowercase letter");
-    }
-
-    // Check for at least one uppercase letter
-    if (!/[A-Z]/.test(password)) {
-        throw new PasswordValidationError(password, "Password must contain at least one uppercase letter");
-    }
-
-    // Check for at least one digit
-    if (!/\d/.test(password)) {
-        throw new PasswordValidationError(password, "Password must contain at least one digit");
-    }
-
-    // Check for at least one special character
-    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/.test(password)) {
-        throw new PasswordValidationError(password,
-            "Password must contain at least one special character (!@#$%^&*()_+-=[]{}|;':\",./<>?~`)"
-        );
-    }
-
-    // Check for no whitespace
-    if (/\s/.test(password)) {
-        throw new PasswordValidationError(password, "Password must not contain spaces");
-    }
-
-    // Check password confirmation if provided
-    if (confirmPassword !== null) {
-        if (password !== confirmPassword) {
-            throw new PasswordValidationError(confirmPassword, "Passwords do not match");
-        }
-    }
-
-    // If all checks pass, return true
     return true;
 }

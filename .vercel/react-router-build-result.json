@@ -1,0 +1,269 @@
+{
+  "buildManifest": {
+    "serverBundles": {
+      "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0": {
+        "id": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+        "file": "build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    },
+    "routeIdToServerBundleId": {
+      "routes/docs.terms-and-conditions": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/docs.privacy-policy": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/authenticate": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/api.auth.$": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/_index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/test": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/user": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/user.onboarding": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/user.signout": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/user.home": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
+    },
+    "routes": {
+      "root": {
+        "id": "root",
+        "file": "app/root.tsx",
+        "path": "",
+        "config": {}
+      },
+      "routes/docs.terms-and-conditions": {
+        "id": "routes/docs.terms-and-conditions",
+        "parentId": "root",
+        "file": "app/routes/docs.terms-and-conditions.tsx",
+        "path": "docs/terms-and-conditions",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/docs.privacy-policy": {
+        "id": "routes/docs.privacy-policy",
+        "parentId": "root",
+        "file": "app/routes/docs.privacy-policy.tsx",
+        "path": "docs/privacy-policy",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/authenticate": {
+        "id": "routes/authenticate",
+        "parentId": "root",
+        "file": "app/routes/authenticate/route.tsx",
+        "path": "authenticate",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/api.auth.$": {
+        "id": "routes/api.auth.$",
+        "parentId": "root",
+        "file": "app/routes/api.auth.$.ts",
+        "path": "api/auth/*",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/_index": {
+        "id": "routes/_index",
+        "parentId": "root",
+        "file": "app/routes/_index.tsx",
+        "index": true,
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/test": {
+        "id": "routes/test",
+        "parentId": "root",
+        "file": "app/routes/test.tsx",
+        "path": "test",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/user": {
+        "id": "routes/user",
+        "parentId": "root",
+        "file": "app/routes/user.tsx",
+        "path": "user",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/user.onboarding": {
+        "id": "routes/user.onboarding",
+        "parentId": "routes/user",
+        "file": "app/routes/user.onboarding.tsx",
+        "path": "onboarding",
+        "config": {}
+      },
+      "routes/user.signout": {
+        "id": "routes/user.signout",
+        "parentId": "routes/user",
+        "file": "app/routes/user.signout.ts",
+        "path": "signout",
+        "config": {}
+      },
+      "routes/user.home": {
+        "id": "routes/user.home",
+        "parentId": "routes/user",
+        "file": "app/routes/user.home.tsx",
+        "path": "home",
+        "config": {}
+      }
+    }
+  },
+  "reactRouterConfig": {
+    "appDirectory": "/home/gabbar/Vault/Tinker/app",
+    "basename": "/",
+    "buildDirectory": "/home/gabbar/Vault/Tinker/build",
+    "future": {
+      "unstable_optimizeDeps": false,
+      "unstable_subResourceIntegrity": false,
+      "v8_middleware": false,
+      "v8_splitRouteModules": false,
+      "v8_viteEnvironmentApi": false
+    },
+    "routes": {
+      "root": {
+        "id": "root",
+        "file": "root.tsx",
+        "path": ""
+      },
+      "routes/docs.terms-and-conditions": {
+        "id": "routes/docs.terms-and-conditions",
+        "parentId": "root",
+        "file": "routes/docs.terms-and-conditions.tsx",
+        "path": "docs/terms-and-conditions"
+      },
+      "routes/docs.privacy-policy": {
+        "id": "routes/docs.privacy-policy",
+        "parentId": "root",
+        "file": "routes/docs.privacy-policy.tsx",
+        "path": "docs/privacy-policy"
+      },
+      "routes/authenticate": {
+        "id": "routes/authenticate",
+        "parentId": "root",
+        "file": "routes/authenticate/route.tsx",
+        "path": "authenticate"
+      },
+      "routes/api.auth.$": {
+        "id": "routes/api.auth.$",
+        "parentId": "root",
+        "file": "routes/api.auth.$.ts",
+        "path": "api/auth/*"
+      },
+      "routes/_index": {
+        "id": "routes/_index",
+        "parentId": "root",
+        "file": "routes/_index.tsx",
+        "index": true
+      },
+      "routes/test": {
+        "id": "routes/test",
+        "parentId": "root",
+        "file": "routes/test.tsx",
+        "path": "test"
+      },
+      "routes/user": {
+        "id": "routes/user",
+        "parentId": "root",
+        "file": "routes/user.tsx",
+        "path": "user"
+      },
+      "routes/user.onboarding": {
+        "id": "routes/user.onboarding",
+        "parentId": "routes/user",
+        "file": "routes/user.onboarding.tsx",
+        "path": "onboarding"
+      },
+      "routes/user.signout": {
+        "id": "routes/user.signout",
+        "parentId": "routes/user",
+        "file": "routes/user.signout.ts",
+        "path": "signout"
+      },
+      "routes/user.home": {
+        "id": "routes/user.home",
+        "parentId": "routes/user",
+        "file": "routes/user.home.tsx",
+        "path": "home"
+      }
+    },
+    "routeDiscovery": {
+      "mode": "lazy",
+      "manifestPath": "/__manifest"
+    },
+    "serverBuildFile": "index.js",
+    "serverModuleFormat": "esm",
+    "ssr": true,
+    "unstable_routeConfig": [
+      {
+        "id": "root",
+        "path": "",
+        "file": "root.tsx",
+        "children": [
+          {
+            "id": "routes/docs.terms-and-conditions",
+            "file": "routes/docs.terms-and-conditions.tsx",
+            "path": "docs/terms-and-conditions"
+          },
+          {
+            "id": "routes/docs.privacy-policy",
+            "file": "routes/docs.privacy-policy.tsx",
+            "path": "docs/privacy-policy"
+          },
+          {
+            "id": "routes/authenticate",
+            "file": "routes/authenticate/route.tsx",
+            "path": "authenticate"
+          },
+          {
+            "id": "routes/api.auth.$",
+            "file": "routes/api.auth.$.ts",
+            "path": "api/auth/*"
+          },
+          {
+            "id": "routes/_index",
+            "file": "routes/_index.tsx",
+            "index": true
+          },
+          {
+            "id": "routes/test",
+            "file": "routes/test.tsx",
+            "path": "test"
+          },
+          {
+            "id": "routes/user",
+            "file": "routes/user.tsx",
+            "path": "user",
+            "children": [
+              {
+                "id": "routes/user.onboarding",
+                "file": "routes/user.onboarding.tsx",
+                "path": "onboarding"
+              },
+              {
+                "id": "routes/user.signout",
+                "file": "routes/user.signout.ts",
+                "path": "signout"
+              },
+              {
+                "id": "routes/user.home",
+                "file": "routes/user.home.tsx",
+                "path": "home"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "viteConfig": {
+    "build": {
+      "assetsDir": "assets"
+    }
+  }
+}

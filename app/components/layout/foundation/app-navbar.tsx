@@ -46,7 +46,7 @@ type DesktopNavigationItemProps = {
 
 const items: LinkItem[] = [
   { name: "Home", href: "/user/home" },
-  { name: "Settings", href: "/user/settings" },
+  { name: "Sign Out", href: "/user/signout" },
 ];
 
 const MobileNavigationItem = ({

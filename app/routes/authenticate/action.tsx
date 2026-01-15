@@ -57,7 +57,17 @@ export async function signupAction(
   rememberMe: boolean,
   request: Request
 ) {
-  await validatePassword(password, confirmPassword);
+  try {
+    await validatePassword(password, confirmPassword);
+  } catch (err) {
+    return data<ApiResponse>(
+      {
+        success: false,
+        error: { message: (err as Error).message },
+      },
+      { status: 400 }
+    );
+  }
 
   return await catchTypedError(
     auth.api.signUpEmail({
