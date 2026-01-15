@@ -23,7 +23,7 @@ export async function sendEmail({
 }: Mail.Options) {
     try {
         const info = await transporter.sendMail({
-            from: `Team Vionex: <${appEnv.SMTP_USER}>`,
+            from: `Team Tinker: <${appEnv.SMTP_USER}>`,
             to: to,
             bcc: bcc,
             subject: subject,

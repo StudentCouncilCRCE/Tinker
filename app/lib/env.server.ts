@@ -7,7 +7,6 @@ const envSchema = z.object({
     SERVICE_NAME: z.string(),
 
     POSTGRES_URL: z.url(),
-    MONGODB_URL: z.url(),
 
     AUTH_SECRET: z.string(),
 
@@ -19,6 +18,10 @@ const envSchema = z.object({
 
     RAZORPAY_KEY: z.string(),
     RAZORPAY_SECRET: z.string(),
+
+    CLOUDINARY_CLOUD_NAME: z.string(),
+    CLOUDINARY_API_KEY: z.string(),
+    CLOUDINARY_API_SECRET: z.string(),
 
     SMTP_HOST: z.hostname(),
     SMTP_PORT: z.coerce.number(),

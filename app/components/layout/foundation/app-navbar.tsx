@@ -45,18 +45,7 @@ type DesktopNavigationItemProps = {
 };
 
 const items: LinkItem[] = [
-  { name: "Dashboard", href: "/user/dashboard" },
-  { name: "History", href: "/user/history" },
-  {
-    name: "Tools",
-    href: "/app/tools/index",
-    type: "multipart",
-    description: "Access all your tools",
-    children: [
-      { name: "Website Auditor", href: "/user/tools/analyzer" },
-      { name: "Builder: carbon.txt", href: "/user/tools/builders/carbon-txt" },
-    ],
-  },
+  { name: "Home", href: "/user/home" },
   { name: "Settings", href: "/user/settings" },
 ];
 
@@ -305,7 +294,7 @@ export function AppNavbar() {
             </SheetHeader>
             <div className="flex flex-col h-full">
               <div className="flex items-center gap-3 p-6 border-b border-border">
-                <AppLogo to="/app/dashboard" />
+                <AppLogo to="/user/home" />
               </div>
 
               <nav
@@ -321,7 +310,7 @@ export function AppNavbar() {
           </SheetContent>
         </Sheet>
 
-        <AppLogo to="/app/dashboard" />
+        <AppLogo to="/user/home" />
 
         <nav
           className="hidden lg:flex items-center"

@@ -13,7 +13,7 @@ export function AppLogo({ to }: { to: string }) {
         {!logoError ? (
           <img
             src="/assets/images/logo-dark.webp"
-            alt="Vionex Logo"
+            alt="Tinker Logo"
             loading="lazy"
             onError={() => setLogoError(true)}
             className="w-12 h-12 object-contain"
@@ -24,7 +24,7 @@ export function AppLogo({ to }: { to: string }) {
           </div>
         )}
       </div>
-      <span className="text-2xl font-bold text-foreground">Vionex</span>
+      <span className="text-2xl font-bold text-foreground">Tinker</span>
     </Link>
   );
 }

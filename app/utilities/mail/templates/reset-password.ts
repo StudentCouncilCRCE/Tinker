@@ -2,9 +2,9 @@ import { baseTemplate } from "./base";
 
 function Text(url: string) {
   return `
-Reset your Vionex password
+Reset your Tinker password
 
-We received a request to reset the password for your Vionex account.
+We received a request to reset the password for your Tinker account.
 
 To create a new password, open the link below in your browser:
 
@@ -12,15 +12,15 @@ ${url}
 
 If you did not request a password reset, you can safely ignore this email. Your password will remain unchanged.
 
-For help, contact us at vionex@gmail.com.
+For help, contact us at tinker@gmail.com.
 
-— Team Vionex
+— Team Tinker
 `;
 }
 
 function HTML(url: string) {
   return baseTemplate({
-    title: "Reset your password - Vionex",
+    title: "Reset your password - Tinker",
     body: `
       <!-- Heading -->
       <h1 style="margin: 0 0 20px 0; font-size: 28px; font-weight: 600; color: #1a1a1a; line-height: 1.3;">
@@ -29,7 +29,7 @@ function HTML(url: string) {
 
       <!-- Intro text -->
       <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.6; color: #4a4a4a;">
-        We received a request to reset the password for your Vionex account.
+        We received a request to reset the password for your Tinker account.
       </p>
 
       <p style="margin: 0 0 30px 0; font-size: 16px; line-height: 1.6; color: #4a4a4a;">
@@ -69,7 +69,7 @@ function HTML(url: string) {
 }
 
 export const resetPasswordEmailTemplate = {
-  subject: "Reset your Vionex password",
+  subject: "Reset your Tinker password",
   text: Text,
   html: HTML
 }

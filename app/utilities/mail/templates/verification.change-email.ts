@@ -2,9 +2,9 @@ import { baseTemplate } from "./base";
 
 function Text(url: string) {
   return `
-Verify your new email address for Vionex
+Verify your new email address for Tinker
 
-We received a request to change the email address associated with your Vionex account.
+We received a request to change the email address associated with your Tinker account.
 
 To confirm this change, please verify your new email address by opening the link below:
 
@@ -12,15 +12,15 @@ ${url}
 
 If you did not request this change, you can safely ignore this email and your email address will remain unchanged.
 
-For help, contact us at vionex@gmail.com.
+For help, contact us at tinker@gmail.com.
 
-— Team Vionex
+— Team Tinker
 `;
 }
 
 function HTML(url: string) {
   return baseTemplate({
-    title: "Verify your new email - Vionex",
+    title: "Verify your new email - Tinker",
     body: `
       <!-- Heading -->
       <h1 style="margin: 0 0 20px 0; font-size: 28px; font-weight: 600; color: #1a1a1a; line-height: 1.3;">
@@ -29,7 +29,7 @@ function HTML(url: string) {
 
       <!-- Intro text -->
       <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.6; color: #4a4a4a;">
-        We received a request to change the email address associated with your Vionex account.
+        We received a request to change the email address associated with your Tinker account.
       </p>
 
       <p style="margin: 0 0 30px 0; font-size: 16px; line-height: 1.6; color: #4a4a4a;">
@@ -69,7 +69,7 @@ function HTML(url: string) {
 }
 
 export const changeEmailVerificationTemplate = {
-  subject: "Verify your new email address - Vionex",
+  subject: "Verify your new email address - Tinker",
   text: Text,
   html: HTML
 };

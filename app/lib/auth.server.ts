@@ -1,15 +1,18 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { mongodbAdapter } from "better-auth/adapters/mongodb";
-import { mongoDB, postgresDB } from "~/database";
+import { postgresDB } from "~/database";
 import { appEnv } from "./env.server";
 import { sendEmail } from "./mailer.server";
 import { emailTemplates } from "~/utilities/mail/templates";
+import { authSchema } from "~/database/pg.schema";
 
 export const auth = betterAuth({
   baseURL: appEnv.APP_URL,
   secret: appEnv.AUTH_SECRET,
-  database: mongodbAdapter(mongoDB),
+  database: drizzleAdapter(postgresDB, {
+    provider: "pg",
+    schema: authSchema
+  }),
 
   /**
    * Pass the drizzle adapter as follows:
@@ -21,6 +24,12 @@ export const auth = betterAuth({
 
   user: {
     additionalFields: {
+      verified: {
+        type: "boolean",
+        required: true,
+        defaultValue: false,
+        input: false
+      },
       role: {
         type: "number",
         required: true,
@@ -67,6 +76,7 @@ export const auth = betterAuth({
     enabled: true,
     autoSignIn: true,
     revokeSessionsOnPasswordReset: true,
+    requireEmailVerification: true,
     sendResetPassword: async ({ user, url }) => {
       const resetPasswordEmail = emailTemplates.resetPasswordEmail;
       await sendEmail({
@@ -113,7 +123,7 @@ export const auth = betterAuth({
     updateAge: 60 * 60 * 24 * 2 // 2 day (every 2 day the session expiration is updated)
   },
   advanced: {
-    cookiePrefix: "vionex",
+    cookiePrefix: "tinker",
     cookies: {
       session_token: {
         name: "session_token",

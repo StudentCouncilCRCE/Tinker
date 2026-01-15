@@ -1,10 +1,10 @@
 import { baseTemplate } from "./base";
 
 function Text(url: string) {
-    return `
-Confirm your Vionex account deletion
+  return `
+Confirm your Tinker account deletion
 
-We received a request to permanently delete your Vionex account.
+We received a request to permanently delete your Tinker account.
 
 To confirm this action, please open the link below:
 
@@ -14,16 +14,16 @@ Once confirmed, your account and all associated data will be permanently deleted
 
 If you did not request this action, you can safely ignore this email and your account will remain active.
 
-For help, contact us at vionex@gmail.com.
+For help, contact us at tinker@gmail.com.
 
-— Team Vionex
+— Team Tinker
 `;
 }
 
 function HTML(url: string) {
-    return baseTemplate({
-        title: "Confirm account deletion - Vionex",
-        body: `
+  return baseTemplate({
+    title: "Confirm account deletion - Tinker",
+    body: `
       <!-- Heading -->
       <h1 style="margin: 0 0 20px 0; font-size: 28px; font-weight: 600; color: #1a1a1a; line-height: 1.3;">
         Confirm Account Deletion
@@ -31,7 +31,7 @@ function HTML(url: string) {
 
       <!-- Intro text -->
       <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.6; color: #4a4a4a;">
-        We received a request to permanently delete your Vionex account.
+        We received a request to permanently delete your Tinker account.
       </p>
 
       <p style="margin: 0 0 30px 0; font-size: 16px; line-height: 1.6; color: #4a4a4a;">
@@ -67,11 +67,11 @@ function HTML(url: string) {
         If you did not request account deletion, no action is required. Your account will remain active.
       </p>
     `,
-    });
+  });
 }
 
 export const deleteAccountVerificationTemplate = {
-    subject: "Confirm your Vionex account deletion",
-    text: Text,
-    html: HTML
+  subject: "Confirm your Tinker account deletion",
+  text: Text,
+  html: HTML
 };

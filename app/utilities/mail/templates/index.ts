@@ -10,5 +10,3 @@ export const emailTemplates = {
     changeEmailVerificationEmail: changeEmailVerificationTemplate,
     deleteAccountVerificationEmail: deleteAccountVerificationTemplate
 } as const
-
-fs.writeFile("./temp/index.html", emailTemplates.resetPasswordEmail.html("google.com"), 'utf8', (err) => console.error(err))

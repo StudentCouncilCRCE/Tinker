@@ -88,7 +88,7 @@ export async function signupAction(
       {
         success: true,
         data: { url: callbackURL },
-        message: "Account created Successfully!",
+        message: "Please check your email for verification!",
       },
       { headers: authHeaders.headers }
     );

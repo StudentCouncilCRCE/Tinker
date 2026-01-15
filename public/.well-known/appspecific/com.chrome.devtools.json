@@ -1,5 +1,5 @@
 {
-  "name": "Vionex",
+  "name": "Tinker",
   "description": "",
   "framework": "React-Router",
   "libraries": [
@@ -9,13 +9,13 @@
   ],
   "author": {
     "name": "Gabbar",
-    "url": "https://github.com/Gabbar-v7/Vionex"
+    "url": "https://github.com/Gabbar-v7/Tinker"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Gabbar-v7/Vionex.git"
+    "url": "https://github.com/Gabbar-v7/Tinker.git"
   },
-  "homepage": "https://github.com/Gabbar-v7/Vionex",
+  "homepage": "https://github.com/Gabbar-v7/Tinker",
   "env": {
     "runtime": "node",
     "platform": "vercel | cloudflare | fly.io",

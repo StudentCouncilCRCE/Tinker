@@ -149,7 +149,7 @@ export function baseTemplate({ title, body }: {
                         <td style="padding: 40px 40px 30px 40px; text-align: center; border-bottom: 1px solid #eeeeee;" class="mobile-padding">
                             <!-- Logo -->
                             <a href="https://yourwebsite.com" style="display: inline-block; text-decoration: none;">
-                                <h1 style="margin: 0; font-size: 32px; font-weight: 700; color: #4F46E5; letter-spacing: -0.5px;">Vionex</h1>
+                                <h1 style="margin: 0; font-size: 32px; font-weight: 700; color: #4F46E5; letter-spacing: -0.5px;">Tinker</h1>
                             </a>
                         </td>
                     </tr>
