@@ -30,14 +30,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   const profiles = await postgresDB
     .select({
-      id: userProfileTable.id,
-      name: usersTable.name,
+      id: userProfileTable.userId,
+      name: userProfileTable.name,
       bio: userProfileTable.bio,
-      image: usersTable.image,
+      image: userProfileTable.image,
     })
-    .from(usersTable)
-    .leftJoin(userProfileTable, eq(usersTable.id, userProfileTable.userId))
-    .where(ne(usersTable.id, session.user.id));
+    .from(userProfileTable)
+    .where(ne(userProfileTable.userId, session.user.id));
 
   appLogger.info(profiles, "User Home Data Fetched");
 
@@ -54,6 +53,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const formJson = await request.json();
   const swipedUserId = formJson.swipedUserId as string;
   const direction = formJson.direction as "left" | "right";
+
   if (direction === "left") {
     return data<ApiResponse>({
       success: true,
@@ -66,60 +66,90 @@ export async function action({ request }: ActionFunctionArgs) {
     "User Swipe Action"
   );
 
-  const isMatch = await postgresDB
+  // Check if the swiped user has already liked the current user
+  const existingMatch = await postgresDB
     .select()
     .from(matchesTable)
-    .innerJoin(
-      alias(userProfileTable, "likedBy"),
-      eq(matchesTable.likeBy, swipedUserId)
+    .where(
+      and(
+        eq(matchesTable.likeFormUser, swipedUserId),
+        eq(matchesTable.likeToUser, session.user.id)
+      )
     )
-    .innerJoin(
-      alias(userProfileTable, "likedUser"),
-      eq(matchesTable.likeUser, swipedUserId)
-    )
-    .limit(1)
-    .then((res) => (res.length > 0 ? res[0] : undefined));
+    .limit(1);
 
-  if (isMatch) {
-    const likeByUser = await postgresDB
-      .select()
-      .from(usersTable)
-      .where(eq(usersTable.id, isMatch.matches.likeBy))
-      .limit(1)
-      .then((res) => res[0]);
+  appLogger.info(existingMatch, "Match Check Result");
 
+  if (existingMatch.length > 0 && existingMatch[0].mailSent === false) {
+    // It's a match!
+    const matchRecord = existingMatch[0];
+
+    // Get both user profiles
+    const [swipedUserProfile, currentUserProfile] = await Promise.all([
+      postgresDB
+        .select()
+        .from(userProfileTable)
+        .where(eq(userProfileTable.userId, swipedUserId))
+        .limit(1)
+        .then((res) => res[0]),
+      postgresDB
+        .select()
+        .from(userProfileTable)
+        .where(eq(userProfileTable.userId, session.user.id))
+        .limit(1)
+        .then((res) => res[0]),
+    ]);
+
+    // Get email addresses
+    const [swipedUser, currentUser] = await Promise.all([
+      postgresDB
+        .select()
+        .from(usersTable)
+        .where(eq(usersTable.id, swipedUserId))
+        .limit(1)
+        .then((res) => res[0]),
+      postgresDB
+        .select()
+        .from(usersTable)
+        .where(eq(usersTable.id, session.user.id))
+        .limit(1)
+        .then((res) => res[0]),
+    ]);
+
+    // Mark the existing match as mail sent
     await postgresDB
       .update(matchesTable)
       .set({ mailSent: true })
-      .where(eq(matchesTable.id, isMatch.matches.id))
-      .returning();
+      .where(eq(matchesTable.id, matchRecord.id));
 
     const matchnotificationEmailTemplate =
       emailTemplates.matchNotificationEmail;
 
+    // Send email to current user
     sendEmail({
-      to: session.user.email,
+      to: currentUser.email,
       subject: matchnotificationEmailTemplate.subject,
       text: matchnotificationEmailTemplate.text(
-        likeByUser.name,
-        isMatch.likedBy.instagramUsername
+        swipedUserProfile.name,
+        swipedUserProfile.instagramUsername
       ),
       html: matchnotificationEmailTemplate.html(
-        likeByUser.name,
-        isMatch.likedBy.instagramUsername
+        swipedUserProfile.name,
+        swipedUserProfile.instagramUsername
       ),
     });
 
+    // Send email to swiped user
     sendEmail({
-      to: likeByUser.email,
+      to: swipedUser.email,
       subject: matchnotificationEmailTemplate.subject,
       text: matchnotificationEmailTemplate.text(
-        session.user.name,
-        isMatch.likedUser.instagramUsername
+        currentUserProfile.name,
+        currentUserProfile.instagramUsername
       ),
       html: matchnotificationEmailTemplate.html(
-        session.user.name,
-        isMatch.likedUser.instagramUsername
+        currentUserProfile.name,
+        currentUserProfile.instagramUsername
       ),
     });
 
@@ -128,13 +158,11 @@ export async function action({ request }: ActionFunctionArgs) {
       message: "It's a match! Check your mail.",
     });
   } else {
-    await postgresDB
-      .insert(matchesTable)
-      .values({
-        likeBy: session.user.id,
-        likeUser: swipedUserId,
-      })
-      .returning();
+    // No match yet, just record the like
+    await postgresDB.insert(matchesTable).values({
+      likeFormUser: session.user.id,
+      likeToUser: swipedUserId,
+    });
 
     return data<ApiResponse>({
       success: true,

@@ -36,7 +36,6 @@ import { usersTable } from "~/database/pg.schema";
 import { eq } from "drizzle-orm";
 import { userProfileTable } from "~/database/pg.schema/tinker.schema";
 import { v2 as cloudinary } from "cloudinary";
-import { catchError } from "~/utilities/handlers/error.handlers";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const session = await authorizeRequest(request, "GET");
@@ -85,6 +84,8 @@ async function uploader(image: File): Promise<string> {
 }
 
 export async function action({ request }: ActionFunctionArgs) {
+  await import("~/lib/cloudinary.server");
+
   const session = await authorizeRequest(request, "POST");
   const formData = await request.formData();
 
@@ -128,26 +129,24 @@ export async function action({ request }: ActionFunctionArgs) {
 
   appLogger.info(submission, "Onboarding submission");
 
-  const [, imageUrl] = await catchError(uploader(submission.data.image))
-    .then((url) => url)
-    .catch((error) => {
-      appLogger.error(error, "Cloudinary upload error");
-      throw data<ApiResponse>(
-        {
-          success: false,
-          error: {
-            message: "Failed to upload image. Please try again.",
-          },
+  let imageUrl: string;
+  try {
+    imageUrl = await uploader(submission.data.image);
+  } catch (error) {
+    appLogger.error(error, "Cloudinary upload error");
+    throw data<ApiResponse>(
+      {
+        success: false,
+        error: {
+          message: "Failed to upload image. Please try again.",
         },
-        { status: 500 }
-      );
-    });
-
+      },
+      { status: 500 }
+    );
+  }
   await postgresDB
     .update(usersTable)
     .set({
-      name: submission.data.name,
-      image: imageUrl,
       verified: true,
     })
     .where(eq(usersTable.id, session.user.id));
@@ -156,7 +155,9 @@ export async function action({ request }: ActionFunctionArgs) {
     .insert(userProfileTable)
     .values({
       userId: session.user.id,
+      name: submission.data.name,
       bio: submission.data.bio,
+      image: imageUrl!,
       instagramUsername: submission.data.instagramUsername,
       course: submission.data.course,
       graduationYear: submission.data.graduationYear,
@@ -164,8 +165,10 @@ export async function action({ request }: ActionFunctionArgs) {
     .onConflictDoUpdate({
       target: userProfileTable.userId,
       set: {
+        name: submission.data.name,
         bio: submission.data.bio,
         instagramUsername: submission.data.instagramUsername,
+        image: imageUrl,
         course: submission.data.course,
         graduationYear: submission.data.graduationYear,
       },
