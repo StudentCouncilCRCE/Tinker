@@ -38,11 +38,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
     .from(userProfileTable)
     .where(ne(userProfileTable.userId, session.user.id));
 
+  const shuffledProfiles = profiles.sort(() => Math.random() - 0.5);
+
   appLogger.info(profiles, "User Home Data Fetched");
 
   return data<ApiResponse>({
     success: true,
-    data: profiles,
+    data: shuffledProfiles,
     message: "User profiles fetched successfully",
   });
 }
@@ -63,7 +65,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
   appLogger.info(
     { swipedUserId, direction, userId: session.user.id },
-    "User Swipe Action"
+    "User Swipe Action",
   );
 
   // Check if the swiped user has already liked the current user
@@ -73,8 +75,8 @@ export async function action({ request }: ActionFunctionArgs) {
     .where(
       and(
         eq(matchesTable.likeFormUser, swipedUserId),
-        eq(matchesTable.likeToUser, session.user.id)
-      )
+        eq(matchesTable.likeToUser, session.user.id),
+      ),
     )
     .limit(1);
 
@@ -131,11 +133,11 @@ export async function action({ request }: ActionFunctionArgs) {
       subject: matchnotificationEmailTemplate.subject,
       text: matchnotificationEmailTemplate.text(
         swipedUserProfile.name,
-        swipedUserProfile.instagramUsername
+        swipedUserProfile.instagramUsername,
       ),
       html: matchnotificationEmailTemplate.html(
         swipedUserProfile.name,
-        swipedUserProfile.instagramUsername
+        swipedUserProfile.instagramUsername,
       ),
     });
 
@@ -145,11 +147,11 @@ export async function action({ request }: ActionFunctionArgs) {
       subject: matchnotificationEmailTemplate.subject,
       text: matchnotificationEmailTemplate.text(
         currentUserProfile.name,
-        currentUserProfile.instagramUsername
+        currentUserProfile.instagramUsername,
       ),
       html: matchnotificationEmailTemplate.html(
         currentUserProfile.name,
-        currentUserProfile.instagramUsername
+        currentUserProfile.instagramUsername,
       ),
     });
 
@@ -185,7 +187,7 @@ export default function Page() {
         },
         {
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
     }
   };
