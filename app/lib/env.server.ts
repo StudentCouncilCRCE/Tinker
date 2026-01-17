@@ -19,9 +19,7 @@ const envSchema = z.object({
     RAZORPAY_KEY: z.string(),
     RAZORPAY_SECRET: z.string(),
 
-    CLOUDINARY_CLOUD_NAME: z.string(),
-    CLOUDINARY_API_KEY: z.string(),
-    CLOUDINARY_API_SECRET: z.string(),
+    IMGBB_API_KEY: z.string(),
 
     SMTP_HOST: z.hostname(),
     SMTP_PORT: z.coerce.number(),
